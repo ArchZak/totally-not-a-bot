@@ -116,7 +116,10 @@ tnb/enforcement/kick - kick + reason\
 tnb/enforcement/role - assign role\
 tnb/enforcement/delete - delete messages\
 tnb/enforcement/dm - dm users\
-tnb/enforcement/set_nickname
+tnb/enforcement/rename - rename user\
+tnb/enforcement/move - move member between vcs
+tnb/enforcement/disconnect - disconnect member from vd
+
 
 #### General Server Resources
 
@@ -130,7 +133,9 @@ tnb/role/id - get role id
 Where should logging be available for users to see?\
 Should tnb/messages/recent be based off a time? envisioning a scenario where it grabs the same messages like 50 times cause dead channel\
 Should channel creation be seperated per type (voice, forum, etc)?\
-TODO: schedule events, invites, emojis, channel override 
+TODO: schedule events, invites, emojis, channel override\
+What prompts should I add?
+
 
 ### Testing Plan
 
