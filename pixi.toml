@@ -1,0 +1,13 @@
+[workspace]
+authors = ["Aarash Zakeri <izear21@gmail.com>"]
+channels = ["conda-forge"]
+name = "totally-not-a-bot"
+platforms = ["osx-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+fastmcp = ">=3.1.0,<4"
+"discord.py" = ">=2.3.2,<3"
+pydantic = ">=2.13.3,<3"
