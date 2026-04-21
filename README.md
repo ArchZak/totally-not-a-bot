@@ -19,13 +19,15 @@ This approach is based on standardization of security and has nothing to do with
 
 AI agent behavior is independent of the MCP project, so staff preferences, reporting, and other prompt / generation handling is out of the scope of this project. 
 
+For now, will gear the project towards moderation, and will consider support for bots to act as normal members later once all the tools, prompts, and resources are set up.
+
 ## Proposed Solution
 
 ### High-Level Approach
 
-A FastMCP server will act as an API to follow the handler -> services. The entry to the server would accept a discord bot token, and then return whether or not a bot exists to actually come online. The implementation of security would have to exist here via password management. 
+A FastMCP server will act as an API to follow the handler -> services. The entry to the server would accept a discord bot token, and then return whether or not a bot exists to actually come online. The implementation of security would have to exist here via password management. The idea would be that multiple AIs can have their own instance of the MCP for their own bot. 
 
-There will then be implementations of all the relevant methods required for an agent to interact in a server like any normal moderator could. 
+There will then be implementations of all the relevant methods required for an agent to interact in a server like any human moderator could. 
 
 So a user would add whatever bot to their server, provide the token to an AI, and then an AI can log into the MCP using that token, where the server would validate that this token actually puts a bot online or not. Security is imperative here. 
 
@@ -51,36 +53,84 @@ tnb_mcp_server/
 
 ### MCP Design
 
+#### Login
+
+tnb - login point to pass key
+
+#### Message Resources
+
 tnb/messages/recent - default fetch 20 messages, or query any num\
 tnb/messages/filter - apply any filter like discord search and fetch\
 tnb/messages/pins - fetch all pins in channel
 
+#### Message Tools 
+
 tnb/send/message - send text - can optionally reply\
+tnb/send/edit - edit text\
 tnb/send/embed - send embed - can optionally reply\
-tnb/send/delete - delete its own content\
-tnb/send/react - react to messages
+tnb/send/delete - delete content\
+tnb/send/react - react to messages\
+tnb/send/delete_react - remove own reaction from message
+
+#### Channel Resources
 
 tnb/channels - fetch all channels + descriptions + ids in server\
 tnb/channels/category - fetch all channels + descriptions + ids in category
 
-tnb/server/emojis - get all emojis\
-tnb/server/roles - get all roles + info
+#### Channel Tools
+
+tnb/channels/create - create channel\
+tnb/channels/edit - edit channel\
+tnb/channels/delete - delete channel\
+tnb/channels/move - move channel to another category
+
+#### Category Resources
+
+tnb/categories - fetch all categories and their channels
+
+#### Category Tools
+
+tnb/category/create - create category\
+tnb/category/edit - edit category\
+tnb/category/delete - delete category
+
+#### Profile Resources
 
 tnb/profile/status - set status\
 tnb/profile/about - set about me
 
-=============================================
+still deciding whatever down here and where it should go / be organized
 
-tnb/moderator/silence - mute for 10 mins + reason\
-tnb/moderator/mute - mute for any duration + reason\
-tnb/moderator/ban - ban + reason\
-tnb/moderator/role - assign role\
-tnb/moderator/delete - delete messages\
-tnb/moderator/dm - dm users
+#### Role Resources
+
+tnb/role/roles - get all roles + info\
+
+#### Role Tools
+
+#### Enforcement Tools
+
+tnb/enforcement/silence - mute for 10 mins + reason\
+tnb/enforcement/mute - mute for any duration + reason\
+tnb/enforcement/ban - ban + reason\
+tnb/enforcement/kick - kick + reason\
+tnb/enforcement/role - assign role\
+tnb/enforcement/delete - delete messages\
+tnb/enforcement/dm - dm users\
+tnb/enforcement/set_nickname
+
+#### General Server Resources
+
+tnb/server/emojis - get all emojis\
+tnb/user/id - get user id\
+tnb/role/id - get role id
+
 
 ### Blockers
 
-Where should logging be available for users to see?
+Where should logging be available for users to see?\
+Should tnb/messages/recent be based off a time? envisioning a scenario where it grabs the same messages like 50 times cause dead channel\
+Should channel creation be seperated per type (voice, forum, etc)?\
+TODO: schedule events, invites, emojis, channel override 
 
 ### Testing Plan
 
