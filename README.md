@@ -136,6 +136,8 @@ Should channel creation be seperated per type (voice, forum, etc)?\
 TODO: schedule events, invites, emojis, channel override\
 What prompts should I add?
 
+RN pretty happy with the idea of having channel + tools and then have an entire enforcement column
+
 
 ### Testing Plan
 
