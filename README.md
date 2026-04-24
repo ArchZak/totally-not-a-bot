@@ -1,7 +1,7 @@
 # TNB Technical Design Document
 
 **Author:** Aarash Zakeri\
-**Date:** 04/02/2026\
+**Date:** 04/24/2026\
 **Status:** Draft\
 **Project:** Totally Not a Bot MCP
 
@@ -53,9 +53,10 @@ tnb_mcp_server/
 
 ### MCP Design
 
-#### Login
+#### Auth
 
-tnb - login point to pass key
+tnb/auth/login - login via key
+tnb/auth/logout
 
 #### Message Resources
 
@@ -103,9 +104,15 @@ still deciding whatever down here and where it should go / be organized
 
 #### Role Resources
 
-tnb/role/roles - get all roles + info\
+tnb/roles/get_roles - get all roles + info\
+tnb/role/id - get role id
 
 #### Role Tools
+
+tnb/roles/assign_role - assign role\
+tnb/roles/remove_role - remove role\
+tnb/roles/create_role - create role\
+tnb/roles/delete_role - delete role\
 
 #### Enforcement Tools
 
@@ -113,7 +120,6 @@ tnb/enforcement/silence - mute for 10 mins + reason\
 tnb/enforcement/mute - mute for any duration + reason\
 tnb/enforcement/ban - ban + reason\
 tnb/enforcement/kick - kick + reason\
-tnb/enforcement/role - assign role\
 tnb/enforcement/delete - delete messages\
 tnb/enforcement/dm - dm users\
 tnb/enforcement/rename - rename user\
@@ -125,7 +131,6 @@ tnb/enforcement/disconnect - disconnect member from vd
 
 tnb/server/emojis - get all emojis\
 tnb/user/id - get user id\
-tnb/role/id - get role id
 
 
 ### Blockers
@@ -135,12 +140,14 @@ Should tnb/messages/recent be based off a time? envisioning a scenario where it 
 Should channel creation be seperated per type (voice, forum, etc)?\
 TODO: schedule events, invites, emojis, channel override\
 What prompts should I add?
+Bitmapping stuff across tiers
 
 RN pretty happy with the idea of having channel + tools and then have an entire enforcement column
 
 
 ### Testing Plan
 
+If given to 5 LLMs, they should all act the same. if they dont then the interface is bad
 
 ## Alternative Approaches
 
