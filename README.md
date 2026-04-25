@@ -1,7 +1,7 @@
 # TNB Technical Design Document
 
 **Author:** Aarash Zakeri\
-**Date:** 04/24/2026\
+**Date:** 04/25/2026\
 **Status:** Draft\
 **Project:** Totally Not a Bot MCP
 
@@ -15,7 +15,7 @@ Want to standardize methods for AI agents to moderate and interact in servers al
 
 ### Non-Goals
 
-This approach is based on standardization of security and has nothing to do with the actual AI agent. Methods will be designed to enable MOBILITY across the servers, allow analysis and scraping of channels, and customization of the profile. 
+This approach is based on standardization of security and has nothing to do with the actual AI agent. Methods will be designed to enable MOBILITY across the servers, allow analysis and scraping of channels, and customization of the profile, such that another person can set up their agent, and then decide to either leave them to be fully autonomous in their server, or query the LLM.
 
 AI agent behavior is independent of the MCP project, so staff preferences, reporting, and other prompt / generation handling is out of the scope of this project. 
 
@@ -60,89 +60,188 @@ tnb/auth/logout
 
 #### Message Resources
 
-tnb/messages/recent - default fetch 20 messages, or query any num\
-tnb/messages/filter - apply any filter like discord search and fetch\
-tnb/messages/pins - fetch all pins in channel
+tnb/messages/recent - fetch recent messages (default 20)  
+  params: channel_id, limit?, since?, before?
+
+tnb/messages/filter - keyword / structured search (like Discord search)  
+  params: query, user_id?, channel_id?, since?, limit?
+
+tnb/messages/pins - fetch all pinned messages in a channel  
+
+tnb/messages/window - fetch a message + surrounding messages (for context windows)  
+  params: message_id, before?, after?
+
+tnb/messages/thread - fetch replies / thread for a message  
+
+tnb/messages/activity - aggregate stats (message count, top users, frequency)  
+  params: channel_id, since?
 
 #### Message Tools 
 
-tnb/send/message - send text - can optionally reply\
-tnb/send/edit - edit text\
-tnb/send/embed - send embed - can optionally reply\
-tnb/send/delete - delete content\
-tnb/send/react - react to messages\
-tnb/send/delete_react - remove own reaction from message
+tnb/messages/send - send text message (optional reply_to)  
+
+tnb/messages/edit - edit existing message  
+
+tnb/messages/embed - send embed (optional reply_to)  
+
+tnb/messages/delete - delete message  
+
+tnb/messages/react - add reaction  
+
+tnb/messages/unreact - remove own reaction  
+
+tnb/messages/bulk_delete - delete multiple messages at once  
+  params: channel_id, message_ids? | count?
 
 #### Channel Resources
 
-tnb/channels - fetch all channels + descriptions + ids in server\
-tnb/channels/category - fetch all channels + descriptions + ids in category
+tnb/channels/list - fetch all channels + descriptions + ids in server
+
+tnb/channels/by_category - fetch channels in a category  
+  params: category_id  
+
+tnb/channels/activity - channel activity stats to detect usage
+
+tnb/channels/dead - detect inactive channels  
+  params: threshold_days
 
 #### Channel Tools
 
-tnb/channels/create - create channel\
-tnb/channels/edit - edit channel\
-tnb/channels/delete - delete channel\
+tnb/channels/create - create channel  
+  params: name, type (text/voice/forum), category_id?
+
+tnb/channels/edit - edit channel settings  
+
+tnb/channels/delete - delete channel  
+
 tnb/channels/move - move channel to another category
 
 #### Category Resources
 
-tnb/categories - fetch all categories and their channels
+tnb/categories/list - fetch all categories and their channels
 
 #### Category Tools
 
-tnb/category/create - create category\
-tnb/category/edit - edit category\
-tnb/category/delete - delete category
+tnb/categories/create - create category  
 
-#### Profile Resources
+tnb/categories/edit - edit category  
 
-tnb/profile/status - set status\
+tnb/categories/delete - delete category
+
+#### Profile Tools
+
+tnb/profile/status - set status
+
 tnb/profile/about - set about me
 
-still deciding whatever down here and where it should go / be organized
+#### User Resources
+
+tnb/users/id - resolve user id  
+
+tnb/users/profile - basic profile + roles + join date  
+
+tnb/users/activity - message activity stats  
+  params: since?
+
+tnb/users/infractions - past moderation actions on user
+
+#### User Tools
+
+tnb/users/dm - send direct message  
+
+tnb/users/rename - change user nickname
 
 #### Role Resources
 
-tnb/roles/get_roles - get all roles + info\
-tnb/role/id - get role id
+tnb/roles/list - get all roles + info
+
+tnb/roles/by_id - fetch role details by id
 
 #### Role Tools
 
-tnb/roles/assign_role - assign role\
-tnb/roles/remove_role - remove role\
-tnb/roles/create_role - create role\
-tnb/roles/delete_role - delete role\
+tnb/roles/assign - assign role to user  
+
+tnb/roles/remove - remove role from user  
+
+tnb/roles/create - create new role  
+
+tnb/roles/delete - delete role  
+
+tnb/roles/bulk_assign - assign role to multiple users
 
 #### Enforcement Tools
 
-tnb/enforcement/silence - mute for 10 mins + reason\
-tnb/enforcement/mute - mute for any duration + reason\
-tnb/enforcement/ban - ban + reason\
-tnb/enforcement/kick - kick + reason\
-tnb/enforcement/delete - delete messages\
-tnb/enforcement/dm - dm users\
-tnb/enforcement/rename - rename user\
-tnb/enforcement/move - move member between vcs
-tnb/enforcement/disconnect - disconnect member from vd
+tnb/enforcement/warn - warn user (no restriction)  
 
+tnb/enforcement/silence - 10 min mute
+
+tnb/enforcement/mute - mute with custom duration  
+
+tnb/enforcement/kick - remove user from server  
+
+tnb/enforcement/ban - ban user  
+
+tnb/enforcement/delete_messages - remove messages (targeted or bulk)  
+
+tnb/enforcement/rename - force nickname change  
+
+tnb/enforcement/move_voice - move user between voice channels  
+
+tnb/enforcement/disconnect_voice - disconnect user from vc
+
+#### Moderation (Decision Layer) 
+
+Meant to combine steps 
+
+tnb/moderation/evaluate - analyze message(s) for spam, toxicity, abuse  
+  params: message_id | text  
+  returns: spam_score, toxicity_score, flags, recommended_action
+
+tnb/moderation/auto_enforce - call evaluate ^^ + respective action in one step, kind of like ISR in OS -> make a punishment suggestion system
+  params: message_id | user_id, policy?  
+  returns: action_taken, reasoning
+
+#### Message Streamlining (Decision layer)
+
+tnb/messages/summary - summarize messages over a window  
+  params: channel_id, since? | limit?
+
+tnb/messages/semantic_search - embedding-based search (not keyword)  
+  params: query, channel_id?, limit?
+
+
+#### User Tracking
+
+tnb/users/risk - evaluate user risk based on past infractions nad notes  
+  params: user_id  
+  returns: risk_score, reasons
+
+tnb/users/summary - summarize user behavior  
+  params: user_id, since?
+
+#### Channel Overview
+
+tnb/channels/summary - summarize what a channel is used for  
+  params: channel_id, since?
+
+tnb/channels/recommend - suggest actions (archive, reorganize, etc.)  
+  params: channel_id?
 
 #### General Server Resources
 
-tnb/server/emojis - get all emojis\
-tnb/user/id - get user id\
+tnb/server/emojis - fetch all emojis  
 
+tnb/server/info - basic server metadata  
+
+tnb/server/invites - active invite links
 
 ### Blockers
 
 Where should logging be available for users to see?\
-Should tnb/messages/recent be based off a time? envisioning a scenario where it grabs the same messages like 50 times cause dead channel\
-Should channel creation be seperated per type (voice, forum, etc)?\
+
 TODO: schedule events, invites, emojis, channel override\
 What prompts should I add?
-Bitmapping stuff across tiers
-
-RN pretty happy with the idea of having channel + tools and then have an entire enforcement column
+Bitmapping tools and resources across tiers
 
 
 ### Testing Plan
