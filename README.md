@@ -53,12 +53,12 @@ tnb_mcp_server/
 
 ### MCP Design
 
-#### Auth
+### Auth
 
 tnb/auth/login - login via key
 tnb/auth/logout
 
-#### Message Resources
+### Message Resources
 
 tnb/messages/recent - fetch recent messages (default 20)  
   params: channel_id, limit?, since?, before?
@@ -76,7 +76,7 @@ tnb/messages/thread - fetch replies / thread for a message
 tnb/messages/activity - aggregate stats (message count, top users, frequency)  
   params: channel_id, since?
 
-#### Message Tools 
+### Message Tools 
 
 tnb/messages/send - send text message (optional reply_to)  
 
@@ -93,7 +93,7 @@ tnb/messages/unreact - remove own reaction
 tnb/messages/bulk_delete - delete multiple messages at once  
   params: channel_id, message_ids? | count?
 
-#### Channel Resources
+### Channel Resources
 
 tnb/channels/list - fetch all channels + descriptions + ids in server
 
@@ -105,7 +105,7 @@ tnb/channels/activity - channel activity stats to detect usage
 tnb/channels/dead - detect inactive channels  
   params: threshold_days
 
-#### Channel Tools
+### Channel Tools
 
 tnb/channels/create - create channel  
   params: name, type (text/voice/forum), category_id?
@@ -116,11 +116,11 @@ tnb/channels/delete - delete channel
 
 tnb/channels/move - move channel to another category
 
-#### Category Resources
+### Category Resources
 
 tnb/categories/list - fetch all categories and their channels
 
-#### Category Tools
+### Category Tools
 
 tnb/categories/create - create category  
 
@@ -128,13 +128,13 @@ tnb/categories/edit - edit category
 
 tnb/categories/delete - delete category
 
-#### Profile Tools
+### Profile Tools
 
 tnb/profile/status - set status
 
 tnb/profile/about - set about me
 
-#### User Resources
+### User Resources
 
 tnb/users/id - resolve user id  
 
@@ -145,19 +145,19 @@ tnb/users/activity - message activity stats
 
 tnb/users/infractions - past moderation actions on user
 
-#### User Tools
+### User Tools
 
 tnb/users/dm - send direct message  
 
 tnb/users/rename - change user nickname
 
-#### Role Resources
+### Role Resources
 
 tnb/roles/list - get all roles + info
 
 tnb/roles/by_id - fetch role details by id
 
-#### Role Tools
+### Role Tools
 
 tnb/roles/assign - assign role to user  
 
@@ -169,7 +169,7 @@ tnb/roles/delete - delete role
 
 tnb/roles/bulk_assign - assign role to multiple users
 
-#### Enforcement Tools
+### Enforcement Tools
 
 tnb/enforcement/warn - warn user (no restriction)  
 
@@ -189,7 +189,7 @@ tnb/enforcement/move_voice - move user between voice channels
 
 tnb/enforcement/disconnect_voice - disconnect user from vc
 
-#### Moderation (Decision Layer) 
+### Moderation (Decision Layer) 
 
 Meant to combine steps 
 
@@ -201,7 +201,7 @@ tnb/moderation/auto_enforce - call evaluate ^^ + respective action in one step, 
   params: message_id | user_id, policy?  
   returns: action_taken, reasoning
 
-#### Message Streamlining (Decision layer)
+### Message Streamlining (Decision Layer)
 
 tnb/messages/summary - summarize messages over a window  
   params: channel_id, since? | limit?
@@ -209,8 +209,7 @@ tnb/messages/summary - summarize messages over a window
 tnb/messages/semantic_search - embedding-based search (not keyword)  
   params: query, channel_id?, limit?
 
-
-#### User Tracking
+### User Tracking (Decision Layer)
 
 tnb/users/risk - evaluate user risk based on past infractions nad notes  
   params: user_id  
@@ -219,7 +218,7 @@ tnb/users/risk - evaluate user risk based on past infractions nad notes
 tnb/users/summary - summarize user behavior  
   params: user_id, since?
 
-#### Channel Overview
+### Channel Overview
 
 tnb/channels/summary - summarize what a channel is used for  
   params: channel_id, since?
@@ -227,7 +226,7 @@ tnb/channels/summary - summarize what a channel is used for
 tnb/channels/recommend - suggest actions (archive, reorganize, etc.)  
   params: channel_id?
 
-#### General Server Resources
+### General Server Resources
 
 tnb/server/emojis - fetch all emojis  
 
@@ -235,16 +234,16 @@ tnb/server/info - basic server metadata
 
 tnb/server/invites - active invite links
 
-### Blockers
+## Blockers
 
-Where should logging be available for users to see?\
+Where should logging be available for users to see?
 
-TODO: schedule events, invites, emojis, channel override\
-What prompts should I add?
+TODO: schedule events, channel override\
+What prompts should I add?\
 Bitmapping tools and resources across tiers
 
 
-### Testing Plan
+## Testing Plan
 
 If given to 5 LLMs, they should all act the same. if they dont then the interface is bad
 
