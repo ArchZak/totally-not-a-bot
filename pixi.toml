@@ -2,7 +2,7 @@
 authors = ["Aarash Zakeri <izear21@gmail.com>"]
 channels = ["conda-forge"]
 name = "totally-not-a-bot"
-platforms = ["osx-64"]
+platforms = ["osx-arm64"]
 version = "0.1.0"
 
 [tasks]
@@ -21,7 +21,7 @@ format = { cmd = [
 ]}
 
 [dependencies]
-fastmcp = ">=3.1.0,<4"
+fastmcp = ">=3.2.4,<4"
 "discord.py" = ">=2.3.2,<3"
 pydantic = ">=2.13.3,<3"
 ruff = ">=0.15.11,<0.16"
