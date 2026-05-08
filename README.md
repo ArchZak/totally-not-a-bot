@@ -1,4 +1,4 @@
-# TNB Technical Design Document
+# TNAB Technical Design Document
 
 **Author:** Aarash Zakeri\
 **Date:** 05/07/2026\
