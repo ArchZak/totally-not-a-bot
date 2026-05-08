@@ -1,7 +1,7 @@
 # TNB Technical Design Document
 
 **Author:** Aarash Zakeri\
-**Date:** 04/25/2026\
+**Date:** 05/07/2026\
 **Status:** Draft\
 **Project:** Totally Not a Bot MCP
 
@@ -25,7 +25,9 @@ For now, will gear the project towards moderation, and will consider support for
 
 ### High-Level Approach
 
-A FastMCP server will act as an API to follow the handler -> services. The entry to the server would accept a discord bot token, and then return whether or not a bot exists to actually come online. The implementation of security would have to exist here via password management. The idea would be that multiple AIs can have their own instance of the MCP for their own bot. 
+A FastMCP server will act as an API to follow the handler -> services. The MCP will be expected to be used locally as is the current expectation of them anyway. So this would bridge the LLM to any bot it needs to connect to.
+
+This means the tokens are already supplied locally, and the bot will either stay connected to one bot or swap between many. As it's local, the MCP doesn't need to be secured.
 
 There will then be implementations of all the relevant methods required for an agent to interact in a server like any human moderator could. 
 
@@ -44,6 +46,7 @@ tnb_mcp_server/
 |       |-- tools/
 |       |-- resources/
 |       |-- prompts/
+|       |-- config/
 |       `-- internals/
 |           `-- services/
 |-- tests/
@@ -52,11 +55,6 @@ tnb_mcp_server/
 ```
 
 ### MCP Design
-
-### Auth
-
-tnb/auth/login - login via key
-tnb/auth/logout
 
 ### Message Resources
 
@@ -237,6 +235,7 @@ tnb/server/invites - active invite links
 ## Blockers
 
 Where should logging be available for users to see?
+1-1 where LLM controls one bot or 1-many where it controls many bots.
 
 TODO: schedule events, channel override\
 What prompts should I add?\
