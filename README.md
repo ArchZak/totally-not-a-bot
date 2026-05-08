@@ -234,7 +234,7 @@ tnb/server/invites - active invite links
 
 ## Blockers
 
-Where should logging be available for users to see?
+Where should logging be available for users to see?\
 1-1 where LLM controls one bot or 1-many where it controls many bots.
 
 TODO: schedule events, channel override\
