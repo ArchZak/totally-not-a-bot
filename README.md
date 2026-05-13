@@ -241,6 +241,8 @@ TODO: schedule events, channel override\
 What prompts should I add?\
 Bitmapping tools and resources across tiers
 
+Add local vector database for memory across sessions? is that an agent responsibility?
+
 
 ## Testing Plan
 
