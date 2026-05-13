@@ -1,10 +1,10 @@
 import asyncio
 import os
 
-import loguru as logging
 from config.discord_bot import TotallyNotABot
 from dotenv import load_dotenv
 from fastmcp import FastMCP
+from loguru import logger
 
 mcp = FastMCP("Totally-not-a-Bot")
 _client = TotallyNotABot()
@@ -15,13 +15,13 @@ async def main():
     token = os.getenv("DISCORD_BOT_TOKEN")
 
     asyncio.create_task(_client.start(token))
-    logging.info("Spinning up Discord Bot")
+    logger.info("Spinning up Discord Bot")
 
     try:
-        logging.info("MCP Server running locally at http://localhost:8000")
+        logger.info("MCP Server running locally at http://localhost:8000")
         await mcp.run_async(transport="sse")
     except Exception as e:
-        logging.error(f"Error: {e}")
+        logger.error(f"Error: {e}")
     finally:
         await _client.close()
 
