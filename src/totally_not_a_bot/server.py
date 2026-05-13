@@ -14,11 +14,11 @@ mcp = FastMCP(
 
 # mcp.add_resource(list_categories)
 
-client = TotallyNotABot()
+_client = TotallyNotABot()
 
 load_dotenv()
 
 
 if __name__ == "__main__":
-    asyncio.run(client.run(os.getenv("DISCORD_BOT_TOKEN")))
+    asyncio.run(_client.run(os.getenv("DISCORD_BOT_TOKEN")))
     mcp.run()
