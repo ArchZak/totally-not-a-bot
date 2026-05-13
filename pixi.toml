@@ -19,6 +19,7 @@ format = { cmd = [
     ".ruff.toml",
     "./"
 ]}
+server = { cmd = "python -m src.totally_not_a_bot.server" }
 
 [dependencies]
 fastmcp = ">=3.2.4,<4"
