@@ -23,6 +23,10 @@ server = { cmd = [
     "python",
     "src/totally_not_a_bot/server.py"
 ] }
+test = { cmd = [
+    "python",
+    "scripts/test.py"
+]}
 
 [dependencies]
 fastmcp = ">=3.2.4,<4"
