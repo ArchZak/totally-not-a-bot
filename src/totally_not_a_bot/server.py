@@ -1,24 +1,33 @@
 import asyncio
 import os
 
+import loguru as logging
 from config.discord_bot import TotallyNotABot
 from dotenv import load_dotenv
 from fastmcp import FastMCP
 
-# from resources.category import list_categories
-
-mcp = FastMCP(
-    name="Totally-not-a-Bot",
-    instructions="An mcp for a discord bot that is definitely not a bot.",
-)
-
-# mcp.add_resource(list_categories)
-
+mcp = FastMCP("Totally-not-a-Bot")
 _client = TotallyNotABot()
 
-load_dotenv()
+
+async def main():
+    load_dotenv()
+    token = os.getenv("DISCORD_BOT_TOKEN")
+
+    asyncio.create_task(_client.start(token))
+    logging.info("Spinning up Discord Bot")
+
+    try:
+        logging.info("MCP Server running locally at http://localhost:8000")
+        await mcp.run_async(transport="sse")
+    except Exception as e:
+        logging.error(f"Error: {e}")
+    finally:
+        await _client.close()
 
 
 if __name__ == "__main__":
-    asyncio.run(_client.run(os.getenv("DISCORD_BOT_TOKEN")))
-    mcp.run()
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
