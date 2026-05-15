@@ -243,6 +243,8 @@ Bitmapping tools and resources across tiers
 
 Add local vector database for memory across sessions? is that an agent responsibility?
 
+Three tiers of perms where 1 is like a user, 2 is like a support ish role, and 3 is an admin
+
 
 ## Testing Plan
 
