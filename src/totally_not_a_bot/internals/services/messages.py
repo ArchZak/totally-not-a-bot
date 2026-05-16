@@ -29,7 +29,16 @@ def get_messages_by_filter():
     pass
 
 
-def get_pinned_messages():
+def get_pinned_messages(channel_id: int) -> list[Message]:
+    """
+    Fetch all the pinned messages in a specific channel.
+
+    Args:
+        channel_id (int): The ID of the channel to fetch pinned messages from.
+
+    Returns:
+        list[Message]: A list of Message objects representing the pinned messages in the channel.
+    """
     pass
 
 
@@ -53,44 +62,142 @@ def get_message_states():
 def send_message(
     channel_id: int, content: str, reply_to_message_id: Optional[int] = None
 ):
+    """
+    Send a message to a specific channel, optionally as a reply to another message.
+
+    Args:
+        channel_id (int): The ID of the channel to send the message to.
+        content (str): The content of the message to be sent.
+        reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+
+    Returns:
+        None
+    """
     pass
 
 
 def edit_message(message_id: int, new_content: str):
+    """
+    Edit an existing message sent by the bot.
+
+    Args:
+        message_id (int): The ID of the message to edit.
+        new_content (str): The new content for the message.
+
+    Returns:
+        None
+    """
     pass
 
 
 def send_embed(
     channel_id: int, embed_data: dict, reply_to_message_id: Optional[int] = None
 ):
+    """
+    Send an embed message to a specific channel, optionally as a reply to another message.
+
+    Args:
+        channel_id (int): The ID of the channel to send the embed message to.
+        embed_data (dict): The data for the embed message.
+        reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+
+    Returns:
+        None
+    """
     pass
 
 
 def edit_embed(message_id: int, new_embed_data: dict):
+    """
+    Edit an existing embed message sent by the bot.
+
+    Args:
+        message_id (int): The ID of the embed message to edit.
+        new_embed_data (dict): The new data for the embed message.
+
+    Returns:
+        None
+    """
     pass
 
 
 def delete_message(message_id: int):
+    """
+    Delete a specific message sent by the bot.
+    
+    Args:
+        message_id (int): The ID of the message to delete.
+
+    Returns:
+        None
+    """
     pass
 
 
 def add_reaction(message_id: int, emoji: str):
+    """
+    Add a reaction to a specific message.
+
+    Args:
+        message_id (int): The ID of the message to react to.
+        emoji (str): The emoji to add as a reaction.
+
+    Returns:
+        None
+    """
     pass
 
 
 def remove_reaction(message_id: int, emoji: str):
+    """
+    Remove a reaction sent by the bot from a specific message.
+
+    Args:
+        message_id (int): The ID of the message to remove the reaction from.
+        emoji (str): The emoji to remove as a reaction.
+
+    Returns:
+        None
+    """
     pass
 
 
 def delete_messages(message_ids: list[int]):
+    """
+    Delete multiple messages at once sent by the bot.
+
+    Args:
+        message_ids (list[int]): A list of message IDs to delete.
+
+    Returns:
+        None
+    """
     pass
 
 
 def pin_message(message_id: int):
+    """
+    Pin a specific message.
+
+    Args:
+        message_id (int): The ID of the message to pin.
+
+    Returns:
+        None
+    """
     pass
 
 
 def unpin_message(message_id: int):
+    """
+    Unpin a specific message.
+
+    Args:
+        message_id (int): The ID of the message to unpin.
+
+    Returns:
+        None
+    """
     pass
 
 
