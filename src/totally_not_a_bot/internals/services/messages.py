@@ -124,7 +124,7 @@ def edit_embed(message_id: int, new_embed_data: dict):
 def delete_message(message_id: int):
     """
     Delete a specific message sent by the bot.
-    
+
     Args:
         message_id (int): The ID of the message to delete.
 
